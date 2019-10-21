@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOPTraning", "OOPTraning\OOPTraning.csproj", "{20D1D3B2-7927-4B6B-9C0D-7E232BF289F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadsPractice", "ThreadsPractice\ThreadsPractice.csproj", "{0A800251-BB74-4DE8-A342-F6F4232E0F5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{20D1D3B2-7927-4B6B-9C0D-7E232BF289F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20D1D3B2-7927-4B6B-9C0D-7E232BF289F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20D1D3B2-7927-4B6B-9C0D-7E232BF289F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A800251-BB74-4DE8-A342-F6F4232E0F5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A800251-BB74-4DE8-A342-F6F4232E0F5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A800251-BB74-4DE8-A342-F6F4232E0F5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A800251-BB74-4DE8-A342-F6F4232E0F5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
