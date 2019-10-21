@@ -60,5 +60,6 @@ namespace OOPTraning.Entities
             Console.WriteLine($"Salt:\t\t{Salt}");
             Console.WriteLine("-------------------------------------------");
         }
+
     }
 }
