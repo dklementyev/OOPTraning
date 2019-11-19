@@ -18,15 +18,29 @@ namespace OOPTraning
             //reader.ShowInfo();
             using (SQLBookRepository context = new SQLBookRepository())
             {
-                var book = new Book();
-                book.Name = "NameOfBOok";
-                book.Author = "AuthorOfBook";
-                book.LendCost = 0.05m;
+                var book = new Book
+                {
+                    Name = "NameOfBOok",
+                    Author = "AuthorOfBook",
+                    LendCost = 0.05m
+                };
                 context.Create(book);
-                context.Delete(3);
                 context.Save();
             }
             Console.Read();
+
+            using (SQLBookRepository context = new SQLBookRepository())
+            {
+                var books = context.GetItems();
+
+                foreach (var book in books)
+                {
+                    Console.WriteLine(book.ToString());
+                }
+
+
+            }
+            Console.ReadLine();
         }
     }
 }
