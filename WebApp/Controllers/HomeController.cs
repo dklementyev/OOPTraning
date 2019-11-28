@@ -16,6 +16,8 @@ namespace WebApp.Controllers
         public ActionResult Index()
         {
             IEnumerable<Book> books = db.Books;
+            IEnumerable<Purchase> purchases = db.Purchases;
+
             ViewBag.Books = books;
             return View();
         }
@@ -34,8 +36,6 @@ namespace WebApp.Controllers
             return View();
         }
 
-
-
         [HttpGet]
         public ActionResult Buy(int id)
         {
@@ -52,7 +52,17 @@ namespace WebApp.Controllers
             return "Thanks," + purchase.NickName + ", for your purchase!";
         }
 
+        [HttpGet]
+        public ActionResult AddBook()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public string AddBook(string bookName = "1")
+        {
+            return "Thanks for creation book!";
+        }
 
     }
 }

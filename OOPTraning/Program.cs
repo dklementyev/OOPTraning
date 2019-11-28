@@ -22,12 +22,11 @@ namespace OOPTraning
                 {
                     Name = "NameOfBOok",
                     Author = "AuthorOfBook",
-                    LendCost = 0.05m
+                    LendCost = 10
                 };
                 context.Create(book);
                 context.Save();
             }
-            Console.Read();
 
             using (SQLBookRepository context = new SQLBookRepository())
             {

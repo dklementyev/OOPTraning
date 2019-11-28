@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Configuration;
-
+using Microsoft.EntityFrameworkCore;
 namespace WebApp.Models.Context
 {
     public class BookContext : DbContext
@@ -20,8 +20,6 @@ namespace WebApp.Models.Context
             optionsBuilder.UseMySQL(connectionString);
             //optionsBuilder.UseMySQL("server=localhost;database=library;user=root;password=");
         }
-
-
 
     }
 }

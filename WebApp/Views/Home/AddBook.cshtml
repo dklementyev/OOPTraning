@@ -1,0 +1,59 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+            <table>
+                <tr>
+                    <td><p>Enter Book Title: </p></td>
+                    <td><input id="BookName" type="text" name="Name" /> </td>
+                </tr>
+                <tr>
+                    <td><p>Enter Author Name :</p></td>
+                    <td>
+                        <input id="AuthorName" type="text" name="AuthorName" />
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Enter Price:</p></td>
+                    <td>
+                        <input id="LendCost" type="text" name="LendCost" />
+                    </td>
+                </tr>
+                <tr><td><input id="addBookButton" type="submit" value="Add" /> </td><td></td></tr>
+            </table>
+    </div>
+</body>
+</html>
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script>
+    $(function () {
+        $('#addBookButton').on('click',
+            function () {
+                var bookName = $('#BookName').val();
+                var authorName = $('#AuthorName').val();
+                var lendCost = parseFloat($('#LendCost').val());
+
+                $.ajax({
+                    url: '/api/books',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({ Name: bookName, Author: authorName, LendCost: lendCost }),
+                    success: console.log("Book was successfully created."),
+                    error: console.log("Error when create book.")
+                });
+            });
+    });
+</script>
