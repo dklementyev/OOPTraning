@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebApp.Controllers.ApiResponses;
 using WebApp.Models;
 using WebApp.Models.Context;
 
@@ -21,9 +22,15 @@ namespace WebApp.Controllers
         }
 
         // GET api/values/5
-        public Book Get(int id)
+        public HttpResponseMessage Get(int id)
         {
-            return db.Books.Find(id);
+            var book = db.Find<Book>(id);
+            if (book == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, new ErrorResponseModel() { ErrorCode = HttpStatusCode.NotFound.ToString(), ErrorMessage = "Book with id wasn't founded." });
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, book);
+            ;
         }
 
         // POST api/values
@@ -47,7 +54,7 @@ namespace WebApp.Controllers
             }
             else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Book with this id wasn't founded.");
+                return Request.CreateResponse(HttpStatusCode.NotFound, new ErrorResponseModel() { ErrorCode = HttpStatusCode.NotFound.ToString(), ErrorMessage = "Book with id wasn't founded." });
             }
         }
 
@@ -56,7 +63,7 @@ namespace WebApp.Controllers
         {
             var book = db.Find<Book>(id);
             if (book == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound, "Book with id wasn't founded.");
+                return Request.CreateResponse(HttpStatusCode.NotFound, new ErrorResponseModel() { ErrorCode = HttpStatusCode.NotFound.ToString(), ErrorMessage = "Book with id wasn't founded." });
 
             db.Remove<Book>(book);
 
@@ -67,7 +74,7 @@ namespace WebApp.Controllers
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, "Book with id wasn't founded.");
+                return Request.CreateResponse(HttpStatusCode.NotFound, new ErrorResponseModel() { ErrorCode = HttpStatusCode.NotFound.ToString(), ErrorMessage = "Book with id wasn't founded." });
             }
 
         }
