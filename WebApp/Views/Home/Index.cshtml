@@ -1,98 +1,45 @@
-﻿@{
-	Layout = null;
+﻿@model IEnumerable<WebApp.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
 }
- 
-<!DOCTYPE html>
 
+<h2>Index</h2>
 
-<html>
-<head>
-    @Styles.Render("~/Content/bootstrap.css")
-    @Styles.Render("~/Content/bootstrap.min.css")
-    @Scripts.Render("~/bundles/modernizr")
-    <meta name="viewport" content="width=device-width"/>
-    <title>Library</title>
-</head>
-<body>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LendCost)
+        </th>
+        <th></th>
+    </tr>
 
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Lib</a>
-            </div>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Author)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LendCost)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BookId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BookId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BookId })
+        </td>
+    </tr>
+}
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/Home/AddBook">Add Book</a></li>
-
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-
-
-<div>
-    <h3>Распродажа книг</h3>
-    <table>
-        <tr>
-            <td>
-                <p>Название книги</p></td>
-            <td>
-                <p>Автор</p></td>
-            <td>
-                <p>Цена</p></td><td></td>
-        </tr>
-        @foreach (var b in ViewBag.Books)
-        {
-            <tr>
-                <td>
-                    <p>@b.Name</p></td>
-                <td>
-                    <p>@b.Author</p></td>
-                <td>
-                    <p>@b.LendCost</p></td>
-                <td>
-                    <p><a href="/Home/Buy/@b.BookId">Купить</a></p></td>
-            </tr>
-        }
-    </table>
-
-
-</div>
-
-<div>
-    <ul id="books"></ul>
-</div>
-</body>
-
-</html>
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-<script>
-    var uri = 'api/books';
-
-    $(document).ready(function () {
-        // Send an AJAX request
-        $.getJSON(uri)
-            .done(function (data) {
-                // On success, 'data' contains a list of products.
-                $.each(data, function (key, item) {
-                    // Add a list item for the product.
-                    $('<li>', { text: formatItem(item) }).appendTo($('#books'));
-                });
-            });
-    });
-
-    function formatItem(item) {
-        return item.Name + ': $' + item.LendCost;
-    }
-
-</script>
+</table>

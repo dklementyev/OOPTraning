@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Models;
@@ -12,14 +15,26 @@ namespace WebApp.Controllers
     {
 
         BookContext db = new BookContext();
-        
-        public ActionResult Index()
-        {
-            IEnumerable<Book> books = db.Books;
-            IEnumerable<Purchase> purchases = db.Purchases;
 
-            ViewBag.Books = books;
-            return View();
+        public async Task<ActionResult> Index()
+        {
+            var baseURI = HttpContext.Request.Url + @"api/books";
+            var books = new List<Book>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseURI);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                var response = await client.GetAsync(baseURI);
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = await response.Content.ReadAsStringAsync();
+                    books = JsonConvert.DeserializeObject<List<Book>>(data);
+                }
+            }
+            return View(books);
         }
 
         public ActionResult About()

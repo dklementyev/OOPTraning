@@ -37,7 +37,7 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
-<script>
+@*<script>
     $(function () {
         $('#addBookButton').on('click',
             function () {
@@ -52,8 +52,10 @@
                     dataType: 'json',
                     data: JSON.stringify({ Name: bookName, Author: authorName, LendCost: lendCost }),
                     success: console.log("Book was successfully created."),
-                    error: console.log("Error when create book.")
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("some error");
+                    }
                 });
             });
     });
-</script>
+</script>*@

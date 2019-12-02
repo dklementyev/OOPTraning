@@ -34,14 +34,42 @@ namespace WebApp.Controllers
         }
 
         // PUT api/values/5
-        public void Put(int id, [FromBody]Book book)
+        public HttpResponseMessage Put(int id, [FromBody]Book book)
         {
-
+            var bookFromDb = db.Find<Book>(id);
+            if (bookFromDb != null)
+            {
+                bookFromDb.Name = book.Name;
+                bookFromDb.Author = book.Author;
+                bookFromDb.LendCost = book.LendCost;
+                db.SaveChanges();
+                return Request.CreateResponse(HttpStatusCode.OK, bookFromDb);
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Book with this id wasn't founded.");
+            }
         }
 
         // DELETE api/values/5
-        public void Delete(int id)
+        public HttpResponseMessage Delete(int id)
         {
+            var book = db.Find<Book>(id);
+            if (book == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound, "Book with id wasn't founded.");
+
+            db.Remove<Book>(book);
+
+            db.SaveChanges();
+            if (db.Find<Book>(id) == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, "Book with id wasn't founded.");
+            }
+
         }
     }
 }
