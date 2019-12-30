@@ -1,18 +1,9 @@
 ﻿
 @{
-    Layout = null;
+	    ViewBag.Title = "Order Book";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Buy</title>
-</head>
-<body>
-<div>
-	<h3>Purchase form</h3>
+<h2>Order Book</h2>
 	<form method="post" action="">
 		<input type="hidden" value="@ViewBag.BookId" name="BookId" />
 		<table>
@@ -20,9 +11,6 @@
 				<td><input type="text" name="NickName" /> </td></tr>
 			<tr><td><p>Enter Your Email :</p></td><td> 
 				<input type="text" name="Email" /> </td></tr>
-			<tr><td><input id="buyButton" type="submit" value="Отправить" /> </td><td></td></tr>
+			<tr><td><input id="buyButton" type="submit" value="Order" /> </td><td></td></tr>
 		</table>
 	</form>
-</div>
-</body>
-</html>

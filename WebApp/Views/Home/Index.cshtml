@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<WebApp.Models.Book>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Books";
 }
 
 <h2>Index</h2>
-
-<p>
+<p>Hello</p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
@@ -20,7 +20,7 @@
         <th>
             @Html.DisplayNameFor(model => model.LendCost)
         </th>
-        <th></th>
+        <th>Actions</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -35,6 +35,7 @@
             @Html.DisplayFor(modelItem => item.LendCost)
         </td>
         <td>
+            @Html.ActionLink("Buy", "Buy", new { id = item.BookId}) |
             @Html.ActionLink("Edit", "Edit", new { id=item.BookId }) |
             @Html.ActionLink("Details", "Details", new { id=item.BookId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.BookId })
@@ -42,4 +43,4 @@
     </tr>
 }
 
-</table>
+</table>*@

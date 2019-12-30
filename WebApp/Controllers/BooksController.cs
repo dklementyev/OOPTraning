@@ -1,82 +1,65 @@
-﻿using System;
-using System.Collections;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Web.Http;
-using WebApp.Controllers.ApiResponses;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using WebApp.Models;
 using WebApp.Models.Context;
 
 namespace WebApp.Controllers
 {
-    public class BooksController : ApiController
+    public class BooksController : Controller
     {
         BookContext db = new BookContext();
-
-        // GET api/values
-        public IEnumerable<Book> Get()
+        // GET: Books
+        public async Task<ActionResult> Index()
         {
-            return db.Books;
-        }
-
-        // GET api/values/5
-        public HttpResponseMessage Get(int id)
-        {
-            var book = db.Find<Book>(id);
-            if (book == null)
+            var baseURI = Request.Url.GetLeftPart(UriPartial.Authority) + @"/api/books";
+            var books = new List<Book>();
+            using (var client = new HttpClient())
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound, new ErrorResponseModel() { ErrorCode = HttpStatusCode.NotFound.ToString(), ErrorMessage = "Book with id wasn't founded." });
+                client.BaseAddress = new Uri(baseURI);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                var response = await client.GetAsync(baseURI);
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = await response.Content.ReadAsStringAsync();
+                    books = JsonConvert.DeserializeObject<List<Book>>(data);
+                }
             }
-            return Request.CreateResponse(HttpStatusCode.OK, book);
-            ;
+            return View(books);
+        }
+        [HttpGet]
+        public ActionResult Buy(int id)
+        {
+            ViewBag.BookId = id;
+            return View();
         }
 
-        // POST api/values
-        public void Post([FromBody]Book book)
+        [HttpPost]
+        public string Buy(Purchase purchase)
         {
-            db.Add(book);
+            purchase.Date = DateTime.Now;
+            db.Purchases.Add(purchase);
             db.SaveChanges();
+            return "Thanks," + purchase.NickName + ", for your purchase!";
         }
 
-        // PUT api/values/5
-        public HttpResponseMessage Put(int id, [FromBody]Book book)
+        [HttpGet]
+        public ActionResult Create()
         {
-            var bookFromDb = db.Find<Book>(id);
-            if (bookFromDb != null)
-            {
-                bookFromDb.Name = book.Name;
-                bookFromDb.Author = book.Author;
-                bookFromDb.LendCost = book.LendCost;
-                db.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK, bookFromDb);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.NotFound, new ErrorResponseModel() { ErrorCode = HttpStatusCode.NotFound.ToString(), ErrorMessage = "Book with id wasn't founded." });
-            }
+            return View();
         }
 
-        // DELETE api/values/5
-        public HttpResponseMessage Delete(int id)
+        [HttpPost]
+        public string AddBook(string bookName = "1")
         {
-            var book = db.Find<Book>(id);
-            if (book == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound, new ErrorResponseModel() { ErrorCode = HttpStatusCode.NotFound.ToString(), ErrorMessage = "Book with id wasn't founded." });
-
-            db.Remove<Book>(book);
-
-            db.SaveChanges();
-            if (db.Find<Book>(id) == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.NotFound, new ErrorResponseModel() { ErrorCode = HttpStatusCode.NotFound.ToString(), ErrorMessage = "Book with id wasn't founded." });
-            }
-
+            return "Thanks for creation book!";
         }
+
     }
 }

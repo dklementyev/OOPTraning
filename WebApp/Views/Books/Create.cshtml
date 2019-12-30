@@ -1,17 +1,7 @@
 ﻿@{
-    Layout = null;
+       ViewBag.Title = "Create Book";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-            <table>
+<h2>Create Book</h2>
                 <tr>
                     <td><p>Enter Book Title: </p></td>
                     <td><input id="BookName" type="text" name="Name" /> </td>
@@ -29,15 +19,11 @@
                     </td>
                 </tr>
                 <tr><td><input id="addBookButton" type="submit" value="Add" /> </td><td></td></tr>
-            </table>
-    </div>
-</body>
-</html>
-
+ 
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
-@*<script>
+<script>
     $(function () {
         $('#addBookButton').on('click',
             function () {
@@ -58,4 +44,4 @@
                 });
             });
     });
-</script>*@
+</script>
